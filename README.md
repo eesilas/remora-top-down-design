@@ -1,25 +1,28 @@
 # remora-top-down-design
+
 Design Remora (top-down approach)
 
-write a main control program for running in nvidia orin nano connected by SPI bus with arduino mega 2560 pro, where arduino mega 2560 pro has sensor measure distance from the wall, and arduino mega 2560 pro also contain thruster motor control program, build the software structure of nvidia orin nano program that automatically run when boot up the power of orin nano, it get data from ultrasound sensors and thruster motor approach the sub-carrier to the wall, there are 4 brushes on the sub-carrier, so it is a cleaning robot, control the movement of the sub-carrier to clean a 3 meter by 3 meter wall.
+write a main control program for running in nvidia orin nano connected by SPI bus with arduino mega 2560 pro, where arduino mega 2560 pro has sensor measure distance from the wall, and arduino mega 2560 pro also contain thruster motor control program, build the software structure of nvidia orin nano program that automatically run when boot up the power of orin nano, it get data from ultrasound sensors and thruster motor approach the sub-carrier to the wall, there are 4 brushes on the sub-carrier, so it is a cleaning robot, control the movement of the sub-carrier to clean a 3 meter by 3 meter wall (the wall size may change from time to time when Remora do it's work, e.g. 4 meter by 5 meter).
 
 Here's a structured software architecture for an **NVIDIA Orin Nano**-based cleaning robot controller that communicates with an **Arduino Mega 2560 Pro** over **SPI** for sensor data and motor control.  
 
-Bill of Materials (BOM)
-- Underwater Ultrasonic Obstacle Avoidance Sensor -3m Arduino WiKi - DFRobot SKU:SEN0598 x 7
-- Brushless underwater motor x 8
+Bill of Materials (BOM) of sub carrier 
+- Water resisted sub carrier body 
+- Underwater Ultrasonic Obstacle Avoidance Sensor (hereafter "UUOAS") -3m Arduino WiKi - DFRobot SKU:SEN0598 x 7
+- Brushless underwater motor for driving brush (hereafter "thruster motor") x 8
+- Connection wire between NVIDIA Orin Nano and Arduino Mega 2560 Pro
 ---
 
 ### **System Overview**
 1. **NVIDIA Orin Nano** (Main Controller)  
    - Runs a **Python-based control program** (or C++ if preferred)  
    - Communicates with Arduino via **SPI**  
-   - Processes **ultrasonic sensor data** for wall distance  
+   - Processes **UUOAS data** for wall distance from sub carrier to the wall
    - Controls **4 brush motors** and **thruster motors**  
    - Implements **autonomous wall-cleaning algorithm**  
 
 2. **Arduino Mega 2560 Pro** (Peripheral Controller)  
-   - Reads **ultrasonic sensors** (HC-SR04 or similar)  
+   - Reads **ultrasonic sensors** (UUOAS or similar)  
    - Controls **thruster motors** (ESC-based)  
    - Reports sensor data to Orin Nano  
 
