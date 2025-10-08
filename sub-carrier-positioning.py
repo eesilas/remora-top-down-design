@@ -28,10 +28,8 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 // Array to hold sensor data
 SensorData sensors[NUM_SENSORS];
 
-// SPI variables
-volatile uint8_t command = 0;
-volatile int motorSpeed = 0;
-volatile uint8_t motorDir = 0;
+// Serial communication variables
+String serialOutput;
 
 void setup() {
   // Initialize serial communications
@@ -39,11 +37,6 @@ void setup() {
   Serial1.begin(115200); // TX1 (Pin 18), RX1 (Pin 19)
   Serial2.begin(115200); // TX2 (Pin 16), RX2 (Pin 17)
   Serial3.begin(115200); // TX3 (Pin 14), RX3 (Pin 15)
-
-  // Initialize SPI
-  SPI.begin();
-  SPCR |= _BV(SPE);      // Enable SPI Slave
-  SPI.attachInterrupt();  // Enable SPI interrupt
 
   // Initialize motor control pin
   pinMode(THRUSTER_PIN, OUTPUT);
@@ -60,20 +53,6 @@ void setup() {
   display.setTextSize(2);
 }
 
-ISR (SPI_STC_vect) {
-  command = SPDR;  // Read SPI command
-  if (command == 0x01) {
-    // Send sensor data - using the most stable sensor reading
-    uint16_t dist_mm = sensors[0].lastStableDistance; // Default to first sensor
-    SPDR = highByte(dist_mm);  // Send high byte first
-  } else if (command == 0x02) {
-    // Motor control command
-    motorDir = SPDR;  // Next byte = direction
-    motorSpeed = SPDR; // Next byte = speed
-    controlMotor(motorDir, motorSpeed);
-  }
-}
-
 void loop() {
   // Send command to all underwater ultrasound sensors
   Serial1.write(COM);
@@ -82,9 +61,12 @@ void loop() {
   delay(100);  // Delay between commands
 
   // Process each sensor
-  processSensor(Serial1, sensors[0], "Sensor 1");
-  processSensor(Serial2, sensors[1], "Sensor 2");
-  processSensor(Serial3, sensors[2], "Sensor 3");
+  processSensor(Serial1, sensors[0], "Left Wall");
+  processSensor(Serial2, sensors[1], "Front Wall");
+  processSensor(Serial3, sensors[2], "Right Wall");
+
+  // Send data to NVIDIA Orin Nano
+  sendDataToOrinNano();
 
   // Update display with all three sensor values
   updateDisplay();
@@ -135,25 +117,26 @@ void updateDisplay() {
   
   // Display each sensor's stable distance
   display.setCursor(10, 25);
-  display.print("1: ");
+  display.print("Left: ");
   display.print(sensors[0].lastStableDistance);
   display.print("mm");
   
   display.setCursor(10, 45);
-  display.print("2: ");
+  display.print("Front: ");
   display.print(sensors[1].lastStableDistance);
   display.print("mm");
   
   display.setCursor(10, 65);
-  display.print("3: ");
+  display.print("Right: ");
   display.print(sensors[2].lastStableDistance);
   display.print("mm");
   
   display.display();
 }
 
-void controlMotor(uint8_t dir, uint8_t speed) {
-  // Implement motor control logic (ESC, brush motors, etc.)
-  // You might want to add direction control here if needed
-  analogWrite(THRUSTER_PIN, speed);
+void sendDataToOrinNano() {
+  serialOutput = String("Left:") + sensors[0].lastStableDistance + "," +
+                 String("Front:") + sensors[1].lastStableDistance + "," +
+                 String("Right:") + sensors[2].lastStableDistance + "\n";
+  Serial.println(serialOutput);  // Send data to NVIDIA Orin Nano
 }
