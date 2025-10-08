@@ -2,7 +2,7 @@
 
 Design Remora (top-down approach)
 
-write a main control program for running in nvidia orin nano connected by SPI bus with arduino mega 2560 pro, where arduino mega 2560 pro has sensor measure distance from the wall, and arduino mega 2560 pro also contain thruster motor control program, build the software structure of nvidia orin nano program that automatically run when boot up the power of orin nano, it get data from ultrasound sensors and thruster motor approach the sub-carrier to the wall, there are 4 brushes on the sub-carrier, so it is a cleaning robot, control the movement of the sub-carrier to clean a 3 meter by 3 meter wall (the wall size may change from time to time when Remora do it's work, e.g. 4 meter by 5 meter).
+write a main control program for running in nvidia orin nano connected by SPI bus with arduino mega 2560 pro, where arduino mega 2560 pro has codes to get sensor measure distance from the wall, and arduino mega 2560 pro also contain codes to control thruster motor rotation direction and rotation speed in its control program, build the software structure of nvidia orin nano program that automatically run when boot up the power of orin nano, it continuouly get data from ultrasound sensors and thruster motor approach the sub-carrier to the wall, there are 4 brushes on the sub-carrier, so it is a cleaning robot, control the movement of the sub-carrier to clean a 3 meter by 3 meter wall (the wall size may change from time to time when Remora do it's work, e.g. 4 meter by 5 meter).
 
 Here's a structured software architecture for an **NVIDIA Orin Nano**-based cleaning robot controller that communicates with an **Arduino Mega 2560 Pro** over **SPI** for sensor data and motor control.  
 
