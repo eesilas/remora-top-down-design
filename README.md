@@ -11,7 +11,8 @@ Bill of Materials (BOM) of sub carrier
 - Underwater Ultrasonic Obstacle Avoidance Sensor (hereafter "UUOAS") -3m Arduino WiKi - DFRobot SKU:SEN0598 x 7
 - Brushless underwater motor for driving brush (hereafter "thruster motor") x 8
 - Connection wire between NVIDIA Orin Nano and Arduino Mega 2560 Pro
----
+- Left and Right sub carrier body limit switch x 4
+
 
 ### **System Overview**
 1. **NVIDIA Orin Nano** (Main Controller)  
@@ -26,11 +27,10 @@ Bill of Materials (BOM) of sub carrier
    - Controls **thruster motors** (ESC-based)  
    - Reports sensor data to Orin Nano  
 
----
-
 ### **Software Architecture (Orin Nano)**
 #### **1. Boot Automation (systemd Service)**
 To run the program automatically on boot:  
+
 ```bash
 sudo nano /etc/systemd/system/cleaning_robot.service
 ```
@@ -53,9 +53,6 @@ WantedBy=multi-user.target
 sudo systemctl enable cleaning_robot.service
 sudo systemctl start cleaning_robot.service
 ```
-
----
-
 #### **2. Main Control Program (`main.py`)**
 ```python
 #!/usr/bin/env python3
