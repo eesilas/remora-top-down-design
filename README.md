@@ -203,7 +203,8 @@ void loop() {
 
 ✅ **Safe Wall Approach**  
 - Ultrasonic sensors act as positioning to sub carrier itself to prevent collisions
-- On/Off switch at the side of sub carrier to detect touch of wall on both left and right
+- On/Off switch at the side of sub carrier to detect touch of wall on both left and right, the switch is SPST switch to trigger close when touch the wall, and normally open circuit
+- Neopixel LED light ring indicates status of the sub carrier
 
 ✅ **Boot Automation**  
 - Runs automatically on startup  
