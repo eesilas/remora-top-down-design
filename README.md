@@ -198,10 +198,12 @@ void loop() {
 
 ✅ **SPI Communication**  
 - Orin Nano (Master) sends motor commands  
-- Arduino (Slave) sends sensor data  
+- Arduino (Slave) sends sensor data
+- add multi-threading lock during communicating between master and slave to avoid concurrent actions
 
 ✅ **Safe Wall Approach**  
-- Ultrasonic sensors prevent collisions  
+- Ultrasonic sensors act as positioning to sub carrier itself to prevent collisions
+- On/Off switch at the side of sub carrier to detect touch of wall on both left and right
 
 ✅ **Boot Automation**  
 - Runs automatically on startup  
