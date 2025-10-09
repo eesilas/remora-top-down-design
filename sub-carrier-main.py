@@ -19,6 +19,14 @@ STEP_DOWN = SUB_CARRIER_LENGTH * STEP_PERCENTAGE
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
+# Define GPIO pins for SPST switches
+LEFT_SWITCH_PIN = 17  # GPIO pin for left switch
+RIGHT_SWITCH_PIN = 27  # GPIO pin for right switch
+
+# Set up GPIO pins as inputs with pull-up resistors
+GPIO.setup(LEFT_SWITCH_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(RIGHT_SWITCH_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
 # SPI Setup
 spi = spidev.SpiDev()
 spi.open(0, 0)  # (bus 0, device 0)
@@ -120,6 +128,12 @@ def main():
             print(f"Cleaning wall {i + 1}...")
             approach_wall()  # Get close to the wall
             clean_wall(wall_width, wall_height)  # Perform cleaning pattern
+
+            # Monitor SPST switches
+            if GPIO.input(LEFT_SWITCH_PIN) == GPIO.LOW:
+                print("Left wall touched")
+            if GPIO.input(RIGHT_SWITCH_PIN) == GPIO.LOW:
+                print("Right wall touched")
 
         # Clean the floor
         clean_floor(floor_length, floor_width)
