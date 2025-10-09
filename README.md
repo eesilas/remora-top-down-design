@@ -1,6 +1,6 @@
 # remora-top-down-design
 
-Design Remora (top-down approach)
+Design Remora workforce robot in top-down approach methods
 
 write a main control program for running in nvidia orin nano connected by SPI bus with arduino mega 2560 pro, where arduino mega 2560 pro has codes to get sensor measure distance from the wall, and arduino mega 2560 pro also contain codes to control thruster motor rotation direction and rotation speed in its control program, build the software structure of nvidia orin nano program that automatically run when boot up the power of orin nano, it continuouly get data from ultrasound sensors and thruster motor approach the sub-carrier to the wall, there are 4 brushes on the sub-carrier, so it is a cleaning robot, control the movement of the sub-carrier to clean a 3 meter by 3 meter wall (the wall size may change from time to time when Remora do it's work, e.g. 4 meter by 5 meter).
 
