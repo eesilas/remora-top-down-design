@@ -1,0 +1,1 @@
+[Unit]\nDescription=Sub Carrier Control Program\nAfter=network.target\n\n[Service]\nType=simple\nExecStart=/usr/bin/python3 /home/eesilas/sub_carrier_main.py\nRestart=on-failure\nUser=eesilas\n\n[Install]\nWantedBy=multi-user.target
