@@ -212,11 +212,15 @@ void loop() {
 ---
 
 ### **Next Steps**
-1. **Test SPI Communication**  
+0. Side touch switch
+   - There are left and right side touch switch at both side, left and right, at the middle of sub carrier, it is an on/off switch, which is each switch connected to a GPIO pin of arduino mega 2560 pro to ground, and when the sub carrier phycally touch the left side wall, left switch circuit closeand trigger the corresponding GPIO connected to ground of the arduino mega 2560 pro circuit, the same, hen the sub carrier phycally touch the right side wall, right switch circuit close and trigger the corresponding GPIO connected to ground of the arduino mega 2560 pro circuit.
+   - 
+2. **Test SPI Communication**  
    - Verify data exchange between Orin Nano and Arduino.  
-2. **Calibrate Motor Speeds**  
+3. **Calibrate Motor Speeds**  
    - Adjust PWM values for thrusters and brush motors.  
-3. **Add Emergency Stop**  
-   - Implement a kill switch (GPIO button).  
+4. **Add Emergency Stop**  
+   - Implement a kill switch (GPIO button).
+
 
 Would you like any modifications (e.g., ROS integration, PID control for smoother movement)? 🚀
