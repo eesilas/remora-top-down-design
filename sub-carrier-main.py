@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 import time
 import spidev
+import threading
+try:
+    import Jetson.GPIO as GPIO  # NVIDIA Orin Nano
+except ImportError:
+    import RPi.GPIO as GPIO  # Fallback for Raspberry Pi
 import Jetson.GPIO as GPIO  # Use Jetson.GPIO for NVIDIA Orin Nano
 import threading
 
@@ -31,12 +36,29 @@ GPIO.setup(RIGHT_SWITCH_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 spi = spidev.SpiDev()
 spi.open(0, 0)  # (bus 0, device 0)
 spi.max_speed_hz = 1000000  # 1 MHz SPI speed
+spi_lock = threading.Lock()  # Thread-safe SPI communication
+
+# Precomputed timing constants for optimization
+SWIPE_TIME = SWIPE_DISTANCE / 0.5  # Time for horizontal swipe
+STEP_TIME = STEP_DOWN / 0.3  # Time for vertical step
 
 # Thread-safe lock for SPI communication
 spi_lock = threading.Lock()
 
 def read_sensor_data():
     """Read ultrasonic sensor data from Arduino via SPI"""
+    with spi_lock:
+        response = spi.xfer2([0x01])  # Request sensor data (0x01 = command)
+        distance = int.from_bytes(response[1:3], byteorder='big') / 100.0  # cm to meters
+    return distance
+
+def send_motor_command(direction, speed):
+    """Send motor control command to Arduino via SPI"""
+    with spi_lock:
+        cmd = [0x02, direction, int(speed * 100)]  # 0x02 = motor command
+        spi.xfer2(cmd)
+
+def approach_wall(target_distance=0.1, max_attempts=100):
     with spi_lock:  # Ensure thread-safe SPI communication
         response = spi.xfer2([0x01])  # Request sensor data (0x01 = command)
     distance = int.from_bytes(response[1:3], byteorder='big') / 100.0  # cm to meters
@@ -74,16 +96,37 @@ def self_diagnostic():
 
 def approach_wall(target_distance=TARGET_DISTANCE):
     """Use thrusters to approach the wall at a safe distance"""
-    while True:
+    attempts = 0
+    while attempts < max_attempts:
         current_dist = read_sensor_data()
         if current_dist <= target_distance:
             break
         # Move forward slowly
+        send_motor_command(1, 0.2)  # (1 = forward, 0.2 = 20% speed)
+        time.sleep(0.1)
+        attempts += 1
+    send_motor_command(0, 0)  # Stop
         send_motor_command(1, 0.2, 0.05)  # Reduced sleep for quicker response
     stop_motors()
 
 def clean_wall(wall_width, wall_height):
     """Main cleaning algorithm: Swipe left-right, step down"""
+    for swipe in range(MAX_SWIPES):
+        # Move right
+        send_motor_command(3, 0.5)  # (3 = right, 0.5 = 50% speed)
+        time.sleep(SWIPE_TIME)  # Use precomputed time
+        
+        # Step down
+        send_motor_command(2, 0.3)  # (2 = down, 0.3 = 30% speed)
+        time.sleep(STEP_TIME)  # Use precomputed time
+        
+        # Move left
+        send_motor_command(4, 0.5)  # (4 = left)
+        time.sleep(SWIPE_TIME)  # Use precomputed time
+        
+        # Step down
+        send_motor_command(2, 0.3)
+        time.sleep(STEP_TIME)  # Use precomputed time
     max_swipes = int(wall_height / STEP_DOWN)
     swipe_time = wall_width / 0.5  # Time = distance / speed
     step_time = STEP_DOWN / 0.3
