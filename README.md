@@ -224,3 +224,12 @@ void loop() {
 
 
 Would you like any modifications (e.g., ROS integration, PID control for smoother movement)? 🚀
+
+smooth movement  
+The sub carrier is a cleaning robot start the program by blink neopixel to indicate start.
+This program in nvidia orin nano communicate by SPI to command arduino mega 2560 pro to identify the location by Underwater Ultrasonic Obstacle Avoidance Sensor (hereafter "UUOAS").
+The sub carrier vertically approaching the wall by turn on the 4 brushes
+The sub carrier vertically move to top left corner of the first wall, swipt horizontally from left to right until touch the wall by control the thruster motors and monitor it location by input data from Underwater Ultrasonic Obstacle Avoidance Sensor (hereafter "UUOAS") and sub carrier edge side on/off switches.
+Move down a distance of 25% to 55% of the sub carrier length still with brushes cleaning action, then move from right to left till touch the wall, then move down same, a distance of 25% to 55% of the sub carrier length, then repeat, swipt horizontally from left to right until touch the wall by control the thruster motors and monitor it location by input data from Underwater Ultrasonic Obstacle Avoidance Sensor (hereafter "UUOAS") and sub carrier edge side on/off switches.
+The action continue until the wall 1 is clean by brushes on the whole wall surface.
+
