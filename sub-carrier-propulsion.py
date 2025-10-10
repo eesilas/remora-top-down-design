@@ -1,14 +1,15 @@
 #include <Servo.h>
 
 // ESC signal pins for all 8 thrusters
-#define ESC_PIN_TR1 2   // Up/Down vector
-#define ESC_PIN_UR2 3   // Forth/Back vector
-#define ESC_PIN_LR3 4   // Forth/Back vector
-#define ESC_PIN_BR4 5   // Up/Down vector
-#define ESC_PIN_TL5 6   // Up/Down vector
-#define ESC_PIN_UL6 7   // Forth/Back vector
-#define ESC_PIN_LL7 8   // Forth/Back vector
-#define ESC_PIN_BL8 9   // Up/Down vector
+#define ESC_PIN_TR1 2   
+// UpnDown vector
+#define ESC_PIN_UR2 3   // ForthnBack vector
+#define ESC_PIN_LR3 4   // ForthnBack vector
+#define ESC_PIN_BR4 5   // UpnDown vector
+#define ESC_PIN_TL5 6   // UpnDown vector
+#define ESC_PIN_UL6 7   // ForthnBack vector
+#define ESC_PIN_LL7 8   // ForthnBack vector
+#define ESC_PIN_BL8 9   // UpnDown vector
 
 #define NUM_THRUSTERS 8
 #define TRANSITION_STEP 10    // microseconds per update
