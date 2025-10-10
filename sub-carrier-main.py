@@ -12,7 +12,7 @@ import threading
 # Constants
 DEFAULT_WALL_WIDTH = 3.0  # meters
 DEFAULT_WALL_HEIGHT = 3.0  # meters
-SUB_CARRIER_LENGTH = 0.4  # meters
+SUB_CARRIER_LENGTH = 0.48  # meters
 SWIPE_DISTANCE = 1.4  # meters (horizontal movement per swipe)
 STEP_PERCENTAGE = 0.25  # Step down 25% of the sub-carrier length
 TARGET_DISTANCE = 0.1  # meters (safe distance from wall)
