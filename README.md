@@ -233,3 +233,5 @@ The sub carrier vertically move to top left corner of the first wall, swipt hori
 Move down a distance of 25% to 55% of the sub carrier length still with brushes cleaning action, then move from right to left till touch the wall, then move down same, a distance of 25% to 55% of the sub carrier length, then repeat, swipt horizontally from left to right until touch the wall by control the thruster motors and monitor it location by input data from Underwater Ultrasonic Obstacle Avoidance Sensor (hereafter "UUOAS") and sub carrier edge side on/off switches.
 The action continue until the wall 1 is clean by brushes on the whole wall surface.
 
+The tank will be range from 1.5 meter to 5 meter in length, width and height. The input of the dimension will use to calculate the cleaning time of the tank.
+
