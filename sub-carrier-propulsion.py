@@ -1,8 +1,6 @@
 #include <Servo.h>
-
 // ESC signal pins for all 8 thrusters
-#define ESC_PIN_TR1 2   
-// UpnDown vector
+#define ESC_PIN_TR1 2   // UpnDown vector
 #define ESC_PIN_UR2 3   // ForthnBack vector
 #define ESC_PIN_LR3 4   // ForthnBack vector
 #define ESC_PIN_BR4 5   // UpnDown vector
