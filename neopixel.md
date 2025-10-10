@@ -61,8 +61,8 @@ import spidev
 import RPi.GPIO as GPIO  # (if using GPIO for SPI CS)
 
 # NeoPixel imports and setup
-NeoPixel Status Mapping:
 
+Light of different color from NeoPixel Status Mapping describe the sub carrier status:
 White: Startup
 Orange: Approaching wall
 Yellow: Ready to clean
