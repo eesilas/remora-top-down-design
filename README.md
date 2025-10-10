@@ -7,12 +7,12 @@ write a main control program for running in nvidia orin nano connected by SPI bu
 Here's a structured software architecture for an **NVIDIA Orin Nano**-based cleaning robot controller that communicates with an **Arduino Mega 2560 Pro** over **SPI** for sensor data and motor control.  
 
 Bill of Materials (BOM) of sub carrier 
-- Water resisted sub carrier body 
-- Underwater Ultrasonic Obstacle Avoidance Sensor (hereafter "UUOAS") -3m Arduino WiKi - DFRobot SKU:SEN0598 x 7
+- Water proof sub carrier body, a cylinder of diameter in 95 mm and of length in 400 mm, one side is a dome and the other side is connectors plate
+- Underwater Ultrasonic Obstacle Avoidance Sensor (hereafter "UUOAS") -3m Arduino supplied by DFRobot SKU:SEN0598 x 7
 - Brushless underwater motor for driving brush (hereafter "thruster motor") x 8
 - Connection wire between NVIDIA Orin Nano and Arduino Mega 2560 Pro
 - Left and Right sub carrier body limit switch x 4
-
+- Thruster motor : Brushless thruster motor and ESC 
 
 ### **System Overview**
 1. **NVIDIA Orin Nano** (Main Controller)  
